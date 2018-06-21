@@ -1,27 +1,20 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-8">
-        <div id="nav">
-          <ul class="nav nav-pills">
-            <li
-              class="nav-item"
-              v-for="device in devices"
-              :key="device.id">
-              <router-link
-                :to="'/' + device.id"
-                :class="{ 'nav-link': true, active: device.id === parseInt($route.params.deviceId) }">
-                Device {{ device.id }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
-        <h2>Device {{ $route.params.deviceId }}</h2>
-      </div>
-      <div class="col-4" style="display: flex; justify-content: center; align-items: center; background-color: #ddd;">
-        &lt; Sidebar &gt;
-      </div>
+  <div>
+    <div id="nav">
+      <ul class="nav nav-pills">
+        <li
+          class="nav-item"
+          v-for="device in devices"
+          :key="device.id">
+          <router-link
+            :to="'/' + device.id"
+            :class="{ 'nav-link': true, active: device.id === parseInt($route.params.deviceId) }">
+            Device {{ device.id }}
+          </router-link>
+        </li>
+      </ul>
     </div>
+    <h2>Device {{ $route.params.deviceId }}</h2>
   </div>
 </template>
 
