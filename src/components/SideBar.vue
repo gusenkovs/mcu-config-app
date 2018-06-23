@@ -81,11 +81,10 @@ export default {
     createDevice() {
       this.$store.commit('addDevice', {
         name: this.selectedDevice,
-      })
+      });
     },
-
     deleteDevice() {
-      this.$store.commit('deleteDevice', 1)
+      this.$store.commit('deleteDevice', 0)
     },
 
     saveToFile() {},

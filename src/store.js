@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Device } from "./models";
 
 Vue.use(Vuex);
 
@@ -10,15 +11,12 @@ export default new Vuex.Store({
     device: null,
   },
   mutations: {
-    addDevice(state, params, kke) {
-      console.log(kke);
-      state.devices.push(params);
-      console.log(params);
-      console.log(state.devices);
+    addDevice(state, data) {
+      state.devices.push(new Device(name=data.name));
+      state.id = state.devices.length - 1;
     },
     deleteDevice(state, id) {
       state.devices.splice(id, 1);
-      console.log(state.devices);
     },
     updateDevice(state, id, updatedDevice) {
       state.devices[id] = updatedDevice;
