@@ -19,16 +19,18 @@
           </option>
         </select>
       </div>
-      <input
-        type="button"
-        class="btn btn-success"
-        @click="createDevice()"
-        value="Create">
-      <input
-        type="button"
-        @click="deleteDevice()"
-        class="btn btn-danger"
-        value="Delete">
+        <div style="max-width: 150px;" class="sidebar-button-align">
+          <input
+            type="button"
+            class="btn btn-success"
+            @click="createDevice()"
+            value="Create">
+          <input
+            type="button"
+            @click="deleteDevice()"
+            class="btn btn-danger"
+            value="Delete">
+        </div>
       <hr>
       <div class="form-group">
         <label for="comport">Comport</label>
@@ -55,16 +57,18 @@
           :value="ipAddressBoard">
       </div>
       <hr>
-      <input
-        type="button"
-        @click="saveToFile()"
-        class="btn btn-success"
-        value="Save to file">
-      <input
-        type="button"
-        @click="loadformFile()"
-        class="btn btn-warning"
-        value="Load config">
+      <div style="max-width: 220px;" class="sidebar-button-align">
+        <input
+          type="button"
+          @click="saveToFile()"
+          class="btn btn-success"
+          value="Save to file">
+        <input
+          type="button"
+          @click="loadformFile()"
+          class="btn btn-warning"
+          value="Load config">
+        </div>
     </form>
     <hr>
   </div>
@@ -74,9 +78,15 @@
 export default {
   name: 'side-bar',
   methods: {
-    createDevice() {},
+    createDevice() {
+      this.$store.commit('addDevice', {
+        name: this.selectedDevice,
+      })
+    },
 
-    deleteDevice() {},
+    deleteDevice() {
+      this.$store.commit('deleteDevice', 1)
+    },
 
     saveToFile() {},
 
@@ -103,10 +113,12 @@ export default {
 
 <style lang="scss">
 @import "../../src/assets/styles/colors.scss";
-
+.sidebar-button-align {
+  margin: auto;
+}
 .side-bar {
   background-color: $sidebar-background;
-  height: 100vh;
+  height: 150vh;
   padding: 20px 15px 15px 20px;
   color: $sidebar-color;
 }
