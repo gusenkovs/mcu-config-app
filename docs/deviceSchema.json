@@ -1,0 +1,101 @@
+{
+  "id": "number",
+  "serverIp": "string",
+  "serverSipPort": "number",
+  "selfIp": "string",
+  "subnetMask": "string",
+  "gateway": "string",
+  "r168ConfigPort": "number",
+
+  "apdConfig": {
+    "controlFl": {
+      "input": {
+        "fl": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "kr": {
+          "type": "number",
+          "values": [1, 2]
+        }
+      },
+
+      "output": {
+        "fl": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "kr": {
+          "type": "number",
+          "values": [1, 2]
+        }
+      }
+    },
+
+    "controlTch": {
+      "input": {
+        "tch": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "kr": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "r168": {
+          "type": "string",
+          "values": ["MN825", "Apd TCH"]
+        }
+      },
+
+      "output": {
+        "tch": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "kr": {
+          "type": "number",
+          "values": [1, 2]
+        },
+        "r168": {
+          "type": "string",
+          "values": ["MN825", "Apd TCH"]
+        }
+      }
+    }
+  },
+
+  "channel1": {
+    "selfSipPort": "number",
+    "voicePort": "number",
+    "selfSipName": "number",
+    "typeR168": {
+      "type": "string",
+      "values": ["R-168", "R-168 100KB"]
+    },
+    "r168Settings": {
+      "timeOutputCall": "number"
+    },
+    "subscriber1": "number",
+    "subscriber2": "number",
+    "subscriber3": "number",
+    "subscriber4": "number"
+  },
+
+  "channel2": {
+    "selfSipPort": "number",
+    "voicePort": "number",
+    "selfSipName": "number",
+    "typeR168": {
+      "type": "string",
+      "values": ["R-168", "R-168 100KB"]
+    },
+    "r168Settings": {
+      "timeOutputCall": "number"
+    },
+    "subscriber1": "number",
+    "subscriber2": "number",
+    "subscriber3": "number",
+    "subscriber4": "number"
+  }
+}
