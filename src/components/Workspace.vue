@@ -4,12 +4,12 @@
       <ul class="nav nav-pills">
         <li
           class="nav-item"
-          v-for="device in devices"
-          :key="device.id">
+          v-for="(device, index) in devices"
+          :key="index">
           <router-link
-            :to="'/' + device.id"
-            :class="{ 'nav-link': true, active: device.id === parseInt($route.params.deviceId) }">
-            Device {{ device.id }}
+            :to="'/' + index"
+            :class="{ 'nav-link': true, active: index === parseInt($route.params.deviceId) }">
+            Device {{ index }}
           </router-link>
         </li>
       </ul>
@@ -19,19 +19,15 @@
 </template>
 
 <script>
-class Device {
-  constructor(id) {
-    this.id = id;
-  }
-}
+import { Device } from '../models';
 
 export default {
   data() {
     return {
       devices: [
-        new Device(1),
-        new Device(2),
-        new Device(3),
+        new Device(),
+        new Device(),
+        new Device(),
       ],
     };
   },
