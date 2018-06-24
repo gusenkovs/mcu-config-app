@@ -5,7 +5,7 @@
         <div class="col">
            <Workspace/>
         </div>
-        <div class="col-md-6 col-lg-5 col-xl-4">
+        <div class="col-md-5 col-lg-4 col-xl-3">
           <SideBar/>
         </div>
       </div>
