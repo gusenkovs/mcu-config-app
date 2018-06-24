@@ -8,15 +8,19 @@ export default new Vuex.Store({
   state: {
     id: null,
     devices: [],
-    device: null,
   },
   mutations: {
     addDevice(state, data) {
       state.devices.push(new Device({ name: data.name }));
-      state.id = state.devices.length - 1;
     },
-    deleteDevice(state, id) {
-      state.devices.splice(id, 1);
+    deselectDevice(state) {
+      state.id = null;
+    },
+    selectDevice(state, id) {
+      state.id = id;
+    },
+    deleteDevice(state) {
+      state.devices.splice(state.id, 1);
     },
     updateDevice(state, id, updatedDevice) {
       state.devices[id] = updatedDevice;
@@ -25,6 +29,9 @@ export default new Vuex.Store({
   getters: {
     getCurrentDevice(state) {
       return state.devices.slice()[state.id];
+    },
+    getCurrentDeviceId(state) {
+      return state.id;
     },
     getDevices(state) {
       return state.devices.slice();

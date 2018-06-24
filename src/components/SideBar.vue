@@ -84,7 +84,7 @@ export default {
       });
     },
     deleteDevice() {
-      this.$store.commit('deleteDevice', 0)
+      this.$store.commit('deleteDevice')
     },
 
     saveToFile() {},

@@ -6,7 +6,7 @@
           <router-link
             to="/"
             class="nav-link"
-            :class="{ active: !$route.params.deviceId }">
+            :class="{ active: !this.$store.getters.getCurrentDeviceId }">
             Home
           </router-link>
         </li>
@@ -15,7 +15,7 @@
           v-for="(device, index) in devices"
           :key="index">
           <router-link
-            :to="'/' + index"
+            :to="'/page/' + index"
             class="nav-link"
             :class="{ active: index === parseInt($route.params.deviceId) }">
             Device {{ index }}
@@ -23,24 +23,30 @@
         </li>
       </ul>
     </div>
-    <h2 v-if="$route.params.deviceId">Device {{ $route.params.deviceId }}</h2>
-    <h2 v-else>Add or choose a device</h2>
   </div>
 </template>
 
 <script>
-import { Device } from '../models';
-
 export default {
+  name: 'workspace-top-bar',
   data() {
     return {
-      devices: [
-        new Device(),
-        new Device(),
-        new Device(),
-      ],
+      deviceId: null,
+      devices: null,
     };
+  },
+  beforeMount() {
+    this.devices = this.$store.getters.getDevices;
+    this.deviceId = this.$store.getters.getDeviceId;
+    this.$store.subscribe((state) => {
+      const subscribedStates = ['addDevice', 'deleteDevice'];
+      if (subscribedStates.includes(state.type)) {
+        this.devices = this.$store.getters.getDevices;
+      }
+      if (state.type === 'selectDevice') {
+        this.deviceId = this.$store.getters.getDeviceId;
+      }
+    });
   },
 };
 </script>
-

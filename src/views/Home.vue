@@ -3,7 +3,8 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col">
-           <Workspace/>
+           <WorkspaceTopBar />
+           <router-view/>
         </div>
         <div class="col-md-5 col-lg-4 col-xl-3">
           <SideBar/>
@@ -14,14 +15,21 @@
 </template>
 
 <script>
-import Workspace from '@/components/Workspace.vue';
 import SideBar from '@/components/SideBar.vue';
+import WorkspaceTopBar from '@/components/WorkspaceTopBar.vue';
 
 export default {
   name: 'home',
   components: {
-    Workspace,
     SideBar,
+    WorkspaceTopBar,
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.params.deviceId) {
+      const { deviceId } = to.params;
+      this.$store.commit('selectDevice', deviceId);
+    }
+    next();
   },
 };
 </script>
