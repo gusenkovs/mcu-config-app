@@ -6,7 +6,7 @@
           <router-link
             to="/"
             class="nav-link"
-            :class="{ active: !this.$store.getters.getCurrentDeviceId }">
+            :class="{ active: !$store.getters.getCurrentDeviceId }">
             Home
           </router-link>
         </li>

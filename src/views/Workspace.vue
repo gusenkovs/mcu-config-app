@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h1>Hello world, it`s u workspace</h1>
-    <p>Create a new device or select from existings</p>
+    <!-- <h1>Hello world, it`s u workspace</h1> -->
+    <!-- <p>Create a new device or select from existings</p> -->
+    <DeviceForm class="form"/>
   </div>
 </template>
 
 <script>
-// import { Device } from '../models';
+import DeviceForm from '../components/DeviceForm.vue';
 
 export default {
   name: 'Workspace',
@@ -15,8 +16,8 @@ export default {
       device: null,
     };
   },
-  methods: {
-
+  components: {
+    DeviceForm,
   },
   beforeMount() {
     this.$store.commit('deselectDevice');
