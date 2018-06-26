@@ -90,7 +90,7 @@ export default {
       this.$router.push('/');
     },
     sendJson() {
-
+      this.$store.commit('sendConfigurations');
     },
   },
   data() {

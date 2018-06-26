@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Device } from './models';
+import axios from 'axios';
 
 function findDeviceById(state, deviceId) {
   const device = state.devices.find(d => d.id === deviceId);
@@ -51,6 +52,23 @@ export default new Vuex.Store({
       } else {
         state.currentDevice = null;
       }
+    },
+
+    sendConfigurations(state) {
+      axios({
+        method: 'post',
+        url: '/settings',
+        data: {
+          config: JSON.stringify(state.devices),
+        },
+      })
+        .then((response) => {
+        // Processing response
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
   },
 
