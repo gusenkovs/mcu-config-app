@@ -1,35 +1,83 @@
 <template>
-  <div>
-    <h2>Device Config</h2>
+  <div class="form">
+    <h2>Настройка устройства</h2>
 
-    <label for="serverIp">Server IP</label>
-    <input type="text" class="form-control" id="serverIp">
+    <label for="serverIp">IP сервера</label>
+    <input
+      type="text"
+      class="form-control"
+      id="serverIp"
+      v-model="serverIp">
 
-    <label for="serverSipPort">Server SIP Port</label>
-    <input type="text" class="form-control" id="serverSipPort">
+    <label for="serverSipPort">SIP порт сервера</label>
+    <input
+      type="number"
+      class="form-control"
+      id="serverSipPort"
+      v-model.number="serverSipPort">
 
-    <label for="selfIp">Self IP</label>
-    <input type="text" class="form-control" id="selfIp">
+    <label for="selfIp">IP устройства</label>
+    <input
+      type="text"
+      class="form-control"
+      id="selfIp"
+      v-model="selfIp">
 
-    <label for="subnetMask">Subnet Mask</label>
-    <input type="text" class="form-control" id="subnetMask">
+    <label for="subnetMask">Маска подсети</label>
+    <input
+      type="text"
+      class="form-control"
+      id="subnetMask"
+      v-model="subnetMask">
 
-    <label for="gateway">Gateway</label>
-    <input type="text" class="form-control" id="gateway">
+    <label for="gateway">Шлюз</label>
+    <input
+      type="text"
+      class="form-control"
+      id="gateway"
+      v-model="gateway">
 
-    <label for="r168ConfigPort">R-168 Config Port</label>
-    <input type="text" class="form-control" id="r168ConfigPort">
+    <label for="r168ConfigPort">Порт конфигурации R-168</label>
+    <input
+      type="number"
+      class="form-control"
+      id="r168ConfigPort"
+      v-model.number="r168ConfigPort">
 
-    <ApdConfigForm/>
+    <!-- <ApdConfigForm class="form"/> -->
   </div>
 </template>
 
 <script>
 import ApdConfigForm from './ApdConfigForm.vue';
 
+function buildComputed(name) {
+  return {
+    [name]: {
+      get() {
+        return this.$store.state.currentDevice[name];
+      },
+      set(value) {
+        this.$store.commit('updateCurrentDeviceFields', {
+          [name]: value,
+        });
+      }
+    },
+  };
+}
+
 export default {
   components: {
     ApdConfigForm,
+  },
+
+  computed: {
+    ...buildComputed('serverIp'),
+    ...buildComputed('serverSipPort'),
+    ...buildComputed('selfIp'),
+    ...buildComputed('subnetMask'),
+    ...buildComputed('gateway'),
+    ...buildComputed('r168ConfigPort'),
   },
 };
 </script>
@@ -37,6 +85,10 @@ export default {
 <style lang="scss">
 label {
   font-size: 1rem;
+}
+
+.form {
+  margin-top: 20px;
 }
 </style>
 

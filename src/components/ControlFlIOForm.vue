@@ -13,25 +13,3 @@
     </select>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      flValue: 1,
-      krValue: 1,
-    };
-  },
-
-  watch: {
-    flValue(newValue) {
-      this.$emit('flChange', newValue);
-    },
-
-    krValue(newValue) {
-      this.$emit('krChange', newValue);
-    },
-  },
-};
-</script>
-

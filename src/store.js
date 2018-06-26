@@ -2,39 +2,78 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { Device } from './models';
 
+function findDeviceById(state, deviceId) {
+  const device = state.devices.find(d => d.id === deviceId);
+  if (device !== undefined) {
+    return device;
+  } else {
+    throw new Error('Device not found!');
+  }
+}
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    id: null,
+    counter: 0,
     devices: [],
+    currentDevice: null,
   },
+
   mutations: {
-    addDevice(state, data) {
-      state.devices.push(new Device({ name: data.name }));
+    createDevice(state, data) {
+      state.devices.push(new Device({ id: state.counter++, ...data }));
     },
-    deselectDevice(state) {
-      state.id = null;
+
+    updateDevice(state, deviceId, updatedDevice) {
+      const device = findDeviceById(state, deviceId);
+      state.devices[state.devices.indexOf(device)] = updatedDevice;
     },
-    selectDevice(state, id) {
-      state.id = id;
+
+    updateCurrentDeviceFields(state, fields) {
+      const device = state.currentDevice;
+      if (device) {
+        Object.keys(fields).forEach((key) => { device[key] = fields[key]; });
+      } else {
+        throw new Error('No device selected!');
+      }
     },
-    deleteDevice(state) {
-      state.devices.splice(state.id, 1);
+
+    deleteDevice(state, deviceId) {
+      const device = findDeviceById(state, deviceId);
+      state.devices.splice(state.devices.indexOf(device), 1);
     },
-    updateDevice(state, id, updatedDevice) {
-      state.devices[id] = updatedDevice;
+
+    selectDevice(state, deviceId) {
+      if ((typeof deviceId === 'number') && (!Number.isNaN(deviceId))) {
+        const device = findDeviceById(state, deviceId);
+        state.currentDevice = device;
+      } else {
+        state.currentDevice = null;
+      }
     },
   },
+
   getters: {
-    getCurrentDevice(state) {
-      return state.devices.slice()[state.id];
+    currentDeviceId({ currentDevice }) {
+      if (currentDevice) {
+        return currentDevice.id;
+      } else {
+        return null;
+      }
     },
-    getCurrentDeviceId(state) {
-      return state.id;
+
+    generateJson({ devices }) {
+      return JSON.stringify(devices);
     },
-    getDevices(state) {
-      return state.devices.slice();
+  },
+
+  actions: {
+    deleteCurrentDevice({ state, commit }) {
+      if (state.currentDevice) {
+        commit('deleteDevice', state.currentDevice.id);
+        commit('selectDevice', state.devices[0]);
+      }
     },
   },
 });

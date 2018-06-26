@@ -1,73 +1,74 @@
 <template>
-  <div class="side-bar">
-    <h1>Actions</h1>
+  <div class="sidebar">
+    <h1>Действия</h1>
     <hr>
-    <h3>Device control</h3>
     <form>
       <div class="form-group">
-        <label for="deviceSelection">Select device</label>
+        <label for="deviceSelection">Выберите тип устройства</label>
         <select
           id="deviceSelection"
           name="deviceSelection"
           class="form-control"
-          v-model="selectedDevice">
+          v-model="selectedDeviceType">
           <option
-            v-for="(option, index) of deviceList"
+            v-for="(option, index) of deviceTypeList"
             :key="index"
             :value="option">
             {{ option }}
           </option>
         </select>
       </div>
-        <div style="max-width: 150px;" class="sidebar-button-align">
+        <div class="sidebar-button-align">
           <input
             type="button"
             class="btn btn-success"
             @click="createDevice()"
-            value="Create">
+            value="Создать">
           <input
+            style="margin-left: 20px;"
             type="button"
             @click="deleteDevice()"
             class="btn btn-danger"
-            value="Delete">
+            value="Удалить">
         </div>
       <hr>
       <div class="form-group">
-        <label for="comport">Comport</label>
+        <label for="comport">COM порт</label>
         <input
           type="text"
           id="comport"
           class="form-control"
-          :value="comport">
+          v-model="comport">
       </div>
       <div class="form-group">
-        <label for="comport">Self ip address</label>
+        <label for="comport">IP адрес устройства</label>
         <input
           type="text"
           id="selfIpAddress"
           class="form-control"
-          :value="selfIpAddress">
+          v-model="selfIpAddress">
       </div>
       <div class="form-group">
-        <label for="comport">Ip Address Board</label>
+        <label for="comport">IP адрес доски</label>
         <input
           type="text"
           id="ipAddressBoard"
           class="form-control"
-          :value="ipAddressBoard">
+          v-model="ipAddressBoard">
       </div>
       <hr>
-      <div style="max-width: 220px;" class="sidebar-button-align">
+      <div class="sidebar-button-align">
         <input
           type="button"
-          @click="saveToFile()"
+          @click="sendJson"
           class="btn btn-success"
-          value="Save to file">
-        <input
+          value="Отправить">
+        <!--input
+          style="margin-left: 20px;"
           type="button"
           @click="loadformFile()"
           class="btn btn-warning"
-          value="Load config">
+          value="Загрузить"-->
         </div>
     </form>
     <hr>
@@ -76,28 +77,29 @@
 
 <script>
 export default {
-  name: 'side-bar',
+  name: 'Sidebar',
   methods: {
     createDevice() {
-      this.$store.commit('addDevice', {
-        name: this.selectedDevice,
+      this.$store.commit('createDevice', {
+        name: this.selectedDeviceType,
+        selfIp: this.selfIpAddress || '127.0.0.1',
       });
     },
     deleteDevice() {
-      this.$store.commit('deleteDevice')
+      this.$store.dispatch('deleteCurrentDevice');
+      this.$router.push('/');
     },
+    sendJson() {
 
-    saveToFile() {},
-
-    loadformFile() {},
+    },
   },
   data() {
     return {
-      selfIpAddress: null,
-      comport: null,
-      ipAddressBoard: null,
-      selectedDevice: 'MN825',
-      deviceList: [
+      selfIpAddress: '',
+      comport: 0,
+      ipAddressBoard: '',
+      selectedDeviceType: 'MN825',
+      deviceTypeList: [
         'MN825',
         'MN921',
         'PO-06',
@@ -110,14 +112,16 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "../../src/assets/styles/colors.scss";
+<style lang="scss" scoped>
+@import "@/assets/styles/colors.scss";
+
 .sidebar-button-align {
   margin: auto;
 }
-.side-bar {
+
+.sidebar {
   background-color: $sidebar-background;
-  height: 150vh;
+  min-height: 100vh;
   padding: 20px 15px 15px 20px;
   color: $sidebar-color;
 }

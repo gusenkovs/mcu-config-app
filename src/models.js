@@ -51,11 +51,12 @@ export class Channel {
 
 export class Device {
   constructor({
-    name = 'MN825', serverIp = '127.0.0.1', serverSipPort = 5060,
+    id, name = 'MN825', serverIp = '127.0.0.1', serverSipPort = 5060,
     selfIp = '127.0.0.1', subnetMask = '255.255.255.0', gateway = '127.0.0.1',
-    r168ConfigPort = '10000', apdConfig = new ApdConfig(),
+    r168ConfigPort = 10000, apdConfig = new ApdConfig(),
     channel1 = new Channel(), channel2 = new Channel(),
   } = {}) {
+    this.id = id;
     this.name = name;
     this.serverIp = serverIp;
     this.serverSipPort = serverSipPort;

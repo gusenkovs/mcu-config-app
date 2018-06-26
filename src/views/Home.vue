@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col">
-           <WorkspaceTopBar />
-           <router-view/>
+          <Navbar/>
+          <router-view/>
         </div>
-        <div class="col-md-5 col-lg-4 col-xl-3">
-          <SideBar/>
+        <div class="col-md-6 col-lg-5 col-xl-4">
+          <Sidebar/>
         </div>
       </div>
     </div>
@@ -15,20 +15,19 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar.vue';
-import WorkspaceTopBar from '@/components/WorkspaceTopBar.vue';
+import Navbar from '@/components/Navbar.vue';
+import Sidebar from '@/components/Sidebar.vue';
 
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
-    SideBar,
-    WorkspaceTopBar,
+    Navbar,
+    Sidebar,
   },
+
   beforeRouteUpdate(to, from, next) {
-    if (to.params.deviceId) {
-      const { deviceId } = to.params;
-      this.$store.commit('selectDevice', deviceId);
-    }
+    const deviceId = parseInt(to.params.deviceId, 10);
+    this.$store.commit('selectDevice', deviceId);
     next();
   },
 };
